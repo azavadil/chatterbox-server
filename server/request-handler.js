@@ -12,6 +12,14 @@ var handleRequest = function(request, response) {
   /* Documentation for both request and response can be found at
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
 
+
+  var messages = [];
+  var counter = 0;
+
+
+  var requestHandled
+
+  // request.method is GET or POST
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   var statusCode = 200;
@@ -29,7 +37,46 @@ var handleRequest = function(request, response) {
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-  response.end("Hello, World!");
+
+  // how to handl 'options' https://gist.github.com/nilcolor/816580
+  if (request.method === 'OPTIONS') {
+    response.end();
+  }
+
+
+  if (request.url === '/1/classes/messages'
+    && request.method === 'POST') {
+    console.log('POST received');
+    request.on('data', function(data) {
+      data = JSON.parse(data);
+      var newDate = new Date();
+      var newId = counter;
+      data.createdAt = newDate;
+      data.objectId = newId;
+      counter++;
+      messages.push(data);
+      // response.writeHead(statusCode, headers);
+      var responseText = JSON.stringify({
+        createdAt: data.createdAt,
+        objectId: data.objectId
+      });
+      response.end(responseText);
+    });
+  }
+
+
+
+  if (request.url === '/1/classes/messages'
+    && request.method === 'GET') {
+    var parseResponse = JSON.stringify({
+      results: messages
+    });
+
+  };
+
+
+
+  //response.end('hello world');
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
@@ -43,3 +90,5 @@ var defaultCorsHeaders = {
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10 // Seconds.
 };
+
+exports.handler = handleRequest;
