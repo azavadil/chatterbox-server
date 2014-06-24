@@ -47,7 +47,7 @@ var handleRequest = function(request, response) {
   if (request.url === '/1/classes/messages'
     && request.method === 'POST') {
     console.log('POST received');
-    var data;
+    var data = '';
 
     request.on('data', function(chunk) {
       data+=chunk;
@@ -79,7 +79,7 @@ var handleRequest = function(request, response) {
     });
     console.log('request.method: ', request.method);
     console.log(responseBody);
-    response.end('hello');
+    response.end(responseBody);
   }
 
 

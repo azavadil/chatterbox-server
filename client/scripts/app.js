@@ -50,7 +50,7 @@ var app = {
     this.currentRoom = 'lobby';
     this.username = 'manu';
     this.friends = {};
-    this._refresh();
+    // this._refresh();
 
     var attackMsg = '<script>prompt("What is your name")</script>';
     var msgObj = {
