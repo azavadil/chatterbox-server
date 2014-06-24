@@ -50,7 +50,7 @@ var app = {
     this.currentRoom = 'lobby';
     this.username = 'manu';
     this.friends = {};
-    // this._refresh();
+    this._refresh();
 
     var attackMsg = '<script>prompt("What is your name")</script>';
     var msgObj = {
@@ -58,11 +58,8 @@ var app = {
       roomname: 'lobby',
       text: 'hello world'
     };
-    var context = this;
-    // setInterval( function(){
-    //   context.send(msgObj)}, 5000);
 
-    // setInterval( this._refresh.bind(this), 1000);
+    setInterval( this._refresh.bind(this), 5000);
   },
 
   handleSubmit: function(evt){

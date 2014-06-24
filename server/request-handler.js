@@ -5,6 +5,9 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
+var messages = [];
+var counter = 0;
+
 var handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
@@ -13,8 +16,7 @@ var handleRequest = function(request, response) {
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
 
 
-  var messages = [];
-  var counter = 0;
+
 
 
   var requestHandled
@@ -38,7 +40,7 @@ var handleRequest = function(request, response) {
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
 
-  // how to handl 'options' https://gist.github.com/nilcolor/816580
+  // how to handle 'options' https://gist.github.com/nilcolor/816580
   if (request.method === 'OPTIONS') {
     response.end();
   }
@@ -47,14 +49,14 @@ var handleRequest = function(request, response) {
   if (request.url === '/1/classes/messages'
     && request.method === 'POST') {
     console.log('POST received');
-    var data = '';
+    var data = [];
 
     request.on('data', function(chunk) {
-      data+=chunk;
+      data.push(chunk);
     });
 
     request.on('end', function() {
-      data = JSON.parse(data);
+      data = JSON.parse(data.join(''));
       var newDate = new Date();
       var newId = counter;
       data.createdAt = newDate;
