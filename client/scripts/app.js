@@ -100,10 +100,10 @@ var app = {
       url: this.server,
       type: "GET",
       dataType: 'json',
-      data: {
-        limit: 30,
-        order: '-createdAt'
-      },
+      // data: {
+      //   limit: 30,
+      //   order: '-createdAt'
+      // },
       success: function(data){
         callback(data);
       },

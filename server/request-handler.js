@@ -43,11 +43,17 @@ var handleRequest = function(request, response) {
     response.end();
   }
 
-
+  // research headers
   if (request.url === '/1/classes/messages'
     && request.method === 'POST') {
     console.log('POST received');
-    request.on('data', function(data) {
+    var data;
+
+    request.on('data', function(chunk) {
+      data+=chunk;
+    });
+
+    request.on('end', function() {
       data = JSON.parse(data);
       var newDate = new Date();
       var newId = counter;
@@ -68,11 +74,13 @@ var handleRequest = function(request, response) {
 
   if (request.url === '/1/classes/messages'
     && request.method === 'GET') {
-    var parseResponse = JSON.stringify({
+    var responseBody = JSON.stringify({
       results: messages
     });
-
-  };
+    console.log('request.method: ', request.method);
+    console.log(responseBody);
+    response.end('hello');
+  }
 
 
 
