@@ -74,6 +74,7 @@ var handleRequest = function(request, response) {
 
 
 
+
   if (request.url === '/1/classes/messages'
     && request.method === 'GET') {
     var responseBody = JSON.stringify({
@@ -82,6 +83,12 @@ var handleRequest = function(request, response) {
     console.log('request.method: ', request.method);
     console.log(responseBody);
     response.end(responseBody);
+  }
+
+  if (request.url === '/log'
+    && request.method === 'GET') {
+    response.writeHead(200, headers);
+    response.end();
   }
 
 
