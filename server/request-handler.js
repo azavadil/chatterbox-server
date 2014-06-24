@@ -63,13 +63,11 @@ var handleRequest = function(request, response) {
       data.objectId = newId;
       counter++;
       messages.push(data);
-      // response.writeHead(statusCode, headers);
-      var responseText = JSON.stringify({
+      response.writeHead(201, headers);
+      response.end(JSON.stringify({
         createdAt: data.createdAt,
         objectId: data.objectId
-      });
-      response.writeHead(201, headers);
-      response.end(responseText);
+      }));
     });
   }
 
@@ -79,12 +77,10 @@ var handleRequest = function(request, response) {
   if (request.url === '/1/classes/messages'
     && request.method === 'GET') {
     routeMatched = true;
-    var responseBody = JSON.stringify({
-      results: messages
-    });
+
     console.log('request.method: ', request.method);
-    console.log(responseBody);
-    response.end(responseBody);
+
+    response.end( JSON.stringify( {results: messages} ));
   }
 
   if (request.url === '/log'
@@ -99,7 +95,7 @@ var handleRequest = function(request, response) {
     response.end();
   }
 
-  //response.end('hello world');
+  // response.end();
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).

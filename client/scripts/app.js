@@ -59,7 +59,7 @@ var app = {
       text: 'hello world'
     };
 
-    setInterval( this._refresh.bind(this), 5000);
+    //setInterval( this._refresh.bind(this), 5000);
   },
 
   handleSubmit: function(evt){

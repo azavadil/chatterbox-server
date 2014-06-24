@@ -85,7 +85,7 @@ it('Should respond with messages that were previously posted', function() {
     var res = new stubs.response();
 
     handler.handler(req, res);
-
+    console.log('res._responseCode201: ',res._responseCode);
     expect(res._responseCode).to.equal(201);
 
     // Now if we request the log for that room the message we posted should be there:
@@ -93,7 +93,6 @@ it('Should respond with messages that were previously posted', function() {
     res = new stubs.response();
 
     handler.handler(req, res);
-
     expect(res._responseCode).to.equal(200);
     var messages = JSON.parse(res._data).results;
     expect(messages.length).to.be.above(0);
