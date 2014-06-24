@@ -16,7 +16,7 @@ var handleRequest = function(request, response) {
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
 
 
-
+  var routeMatched = false;
 
 
   var requestHandled
@@ -48,11 +48,11 @@ var handleRequest = function(request, response) {
   // research headers
   if (request.url === '/1/classes/messages'
     && request.method === 'POST') {
+    routeMatched = true;
     console.log('POST received');
     var data = [];
     request.on('data', function(chunk) {
       data.push(chunk);
-
     });
 
     request.on('end', function() {
@@ -78,6 +78,7 @@ var handleRequest = function(request, response) {
 
   if (request.url === '/1/classes/messages'
     && request.method === 'GET') {
+    routeMatched = true;
     var responseBody = JSON.stringify({
       results: messages
     });
@@ -88,11 +89,15 @@ var handleRequest = function(request, response) {
 
   if (request.url === '/log'
     && request.method === 'GET') {
+    routeMatched = true;
     response.writeHead(200, headers);
     response.end();
   }
 
-
+  if (!routeMatched) {
+    response.writeHead(404, headers);
+    response.end();
+  }
 
   //response.end('hello world');
 };
