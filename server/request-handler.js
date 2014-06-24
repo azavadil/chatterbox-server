@@ -50,9 +50,9 @@ var handleRequest = function(request, response) {
     && request.method === 'POST') {
     console.log('POST received');
     var data = [];
-
     request.on('data', function(chunk) {
       data.push(chunk);
+
     });
 
     request.on('end', function() {
@@ -68,6 +68,7 @@ var handleRequest = function(request, response) {
         createdAt: data.createdAt,
         objectId: data.objectId
       });
+      response.writeHead(201, headers);
       response.end(responseText);
     });
   }
